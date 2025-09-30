@@ -29,6 +29,7 @@ public class GlobalExceptionHandler {
             errorsMap.put(fieldName,addMapValue(errorsMap.get(fieldName),objectError.getDefaultMessage()));
            }else {
                errorsMap.put(fieldName,addMapValue(new ArrayList<>(),objectError.getDefaultMessage()));
+
            }
         }
     }
