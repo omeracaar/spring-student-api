@@ -1,4 +1,11 @@
 package com.omeracar.services;
 
-public class IEmployeeService {
+import com.omeracar.dto.DtoEmployee;
+
+import java.util.List;
+
+public interface IEmployeeService {
+
+    public List<DtoEmployee> findAllEmployees(Long id);
+
 }

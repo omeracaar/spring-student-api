@@ -23,7 +23,7 @@ public class DtoStudentIU {
     @Email(message = "Geçerli bir e-posta adresi giriniz")
     private String email;
 
-    @Size(min = 11,max = 11, message = "tckn boş geçilemez")
+    @Size(min = 11,max = 11, message = "tckn 11 haneli olmalıdır")
     @NotEmpty(message = "tckn boş geçilemez")
     private String tckn;
 

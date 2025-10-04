@@ -1,7 +1,9 @@
 package com.omeracar.services.impl;
 
+import com.omeracar.dto.DtoCourse;
 import com.omeracar.dto.DtoStudent;
 import com.omeracar.dto.DtoStudentIU;
+import com.omeracar.entities.Course;
 import com.omeracar.entities.Student;
 import com.omeracar.repository.StudentRepository;
 import com.omeracar.services.IStudentService;
@@ -48,14 +50,24 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public DtoStudent getStudentById(Integer id) {
-        DtoStudent dto=new DtoStudent();
-        Optional<Student> optional= studentRepository.findStudentById(id);
-        if (optional.isPresent()){
-            Student dbStudent=optional.get();
-
-            BeanUtils.copyProperties(dbStudent,dto);
+        DtoStudent dtoStudent =new DtoStudent();
+        Optional<Student> optional=studentRepository.findById(id);
+        if (optional.isEmpty()){
+            return null;
         }
-        return dto;
+        Student dbStudent=optional.get();
+        BeanUtils.copyProperties(dbStudent,dtoStudent);
+
+        if (dbStudent.getCourses()!=null && !dbStudent.getCourses().isEmpty()){
+            for (Course course:dbStudent.getCourses()){
+                DtoCourse dtoCourse=new DtoCourse();
+                BeanUtils.copyProperties(course,dtoCourse);
+
+                dtoStudent.getCourses().add(dtoCourse);
+            }
+        }
+        return dtoStudent;
+
     }
 
     @Override

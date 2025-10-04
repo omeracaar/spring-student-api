@@ -1,15 +1,13 @@
 package com.omeracar.exception;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -21,7 +19,7 @@ public class GlobalExceptionHandler {
 
     //validationdan gelen exceptionları handle etmek ve response dönmek
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public void handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
+    public ResponseEntity<ApiError> handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
         Map<String, List<String>> errorsMap=new HashMap<>();
         for(ObjectError objectError : e.getBindingResult().getAllErrors()){
            String fieldName= ((FieldError)objectError).getField();
@@ -32,7 +30,19 @@ public class GlobalExceptionHandler {
 
            }
         }
+       return ResponseEntity.badRequest().body(createApiError(errorsMap));
     }
+
+    private <T> ApiError <T> createApiError(T errors){
+        ApiError<T> apiError =new ApiError();
+        apiError.setId(UUID.randomUUID().toString());
+        apiError.setErrorTime(new Date());
+        apiError.setErrors(errors);
+
+        return apiError;
+    }
+
+
 
 
 }

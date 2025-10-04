@@ -1,4 +1,9 @@
 package com.omeracar.services;
 
-public interface IRoomService {
+import com.omeracar.dto.DtoHome;
+
+public interface IHomeService {
+
+    public DtoHome findHomeById(Long id);
+
 }
