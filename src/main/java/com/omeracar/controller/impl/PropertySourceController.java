@@ -2,11 +2,14 @@ package com.omeracar.controller.impl;
 
 import com.omeracar.configuration.DataSource;
 import com.omeracar.configuration.GlobalProperties;
+import com.omeracar.configuration.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/rest/api/property")
@@ -16,13 +19,13 @@ public class PropertySourceController {
     private GlobalProperties globalProperties;
 
     @GetMapping("/datasource")
-    public DataSource getDataSource(){
-        DataSource dataSource=new DataSource();
+    public DataSource getDataSource() {
 
-        dataSource.setUrl(globalProperties.getUrl());
-        dataSource.setUsername(globalProperties.getUsername());
-        dataSource.setPassword(globalProperties.getPassword());
+        return null;
+    }
 
-        return dataSource;
+    @GetMapping(value = "/getServers")
+    public List<Server> getServers() {
+        return globalProperties.getServers();
     }
 }
